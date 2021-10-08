@@ -1,2 +1,3 @@
 # pos-ecommerce-django
-Django + React JS Point of Sales System
+
+Django + React JS Point of Sales System and Ecommerce
