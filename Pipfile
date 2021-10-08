@@ -9,6 +9,7 @@ djangorestframework = "*"
 django-filter = "*"
 drf-nested-routers = "*"
 psycopg2-binary = "*"
+django-autoslug = "*"
 
 [dev-packages]
 autopep8 = "*"

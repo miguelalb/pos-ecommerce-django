@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.conf import settings
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from autoslug import AutoSlugField
 
 
 class Promocion(models.Model):
@@ -16,6 +18,32 @@ class Promocion(models.Model):
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=255)
+    producto_destacado = models.ForeignKey(
+        'Producto', on_delete=models.SET_NULL, null=True, related_name='+', blank=True)
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        ordering = ['nombre']
+
+
+class Producto(models.Model):
+    sku = models.CharField(max_length=255)
+    nombre = models.CharField(max_length=255)
+    slug = AutoSlugField(populate_from='nombre')
+    descripcion = models.CharField(max_length=255)
+    inventario = models.PositiveIntegerField()
+    costo = models.DecimalField(
+        max_digits=6, decimal_places=2, validators=[MinValueValidator(0)])
+    margen = models.FloatField()
+    precio = models.DecimalField(
+        max_digits=6, decimal_places=2, validators=[MinValueValidator(0)])
+    rating = models.PositiveIntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(5)])
+    categoria = models.ForeignKey(
+        Categoria, on_delete=models.PROTECT, related_name='productos')
+    promociones = models.ManyToManyField(Promocion, blank=True)
 
     def __str__(self):
         return self.nombre
