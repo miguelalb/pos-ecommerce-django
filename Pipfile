@@ -10,6 +10,7 @@ django-filter = "*"
 drf-nested-routers = "*"
 psycopg2-binary = "*"
 django-autoslug = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 autopep8 = "*"

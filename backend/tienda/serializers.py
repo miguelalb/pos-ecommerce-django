@@ -15,6 +15,7 @@ class ProductoSerializer(serializers.ModelSerializer):
                   'costo', 'margen', 'precio', 'rating', 'stock', 'categoria']
 
     stock = serializers.SerializerMethodField(method_name='calc_stock')
+    categoria = CategoriaSerializer()
 
     def calc_stock(self, producto: Producto):
         if producto.inventario <= 5:
